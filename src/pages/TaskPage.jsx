@@ -3,7 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { readTask, deleteTask as deleteTaskRoute } from "../Routes";
-import './App.css';
+import "../App.css";
 
 function TaskPage() {
   const navigate = useNavigate();
@@ -32,6 +32,19 @@ function TaskPage() {
       <div>Nome: {task.name}</div>
       <div>Descrição: {task.description}</div>
       <div>Prioridade: {task.priority}</div>
+      <div>Estado: {task.done ? "Concluída" : "Por fazer"}</div>
+      {task.subtasks?.length > 0 && (
+        <div>
+          <h4>Subtarefas:</h4>
+          <ul>
+            {task.subtasks.map((subtask) => (
+              <li key={subtask.id}>
+                {subtask.title} — {subtask.done ? "✅" : "❌"}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <button className="button" onClick={deleteTask}>
         Eliminar

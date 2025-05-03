@@ -1,22 +1,25 @@
 {
   "tasks": [
     {
-      "name": "António",
-      "description": "universidade aberta",
+      "name": "ola",
+      "description": "adeus",
       "priority": "baixa",
-      "id": "fd00"
+      "subtasks": [
+        {
+          "id": "6a89ea9f-067f-452f-9578-f7782cfb120c",
+          "title": "cagar",
+          "done": false
+        }
+      ],
+      "id": "379da6db-6e74-46f8-a42a-0939a879b810"
     },
     {
-      "id": "b04b",
-      "name": "coca-cola",
-      "description": "usar detergente xpto",
-      "priority": "media"
-    },
-    {
-      "id": "d516",
-      "name": "",
-      "description": "",
-      "priority": ""
+      "id": "bc2e95cf-f7b4-4fe7-8f79-d3c95c755812",
+      "name": "trabalho de EDD",
+      "description": "ver id",
+      "priority": "baixa",
+      "done": false,
+      "subtasks": []
     }
   ]
 }

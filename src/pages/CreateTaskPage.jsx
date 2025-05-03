@@ -1,55 +1,63 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 
 const url = `http://localhost:3000`;
 
 function CreateTaskPage() {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("");
+  const [done, setDone] = useState(false);
+  const [subtasks, setSubtasks] = useState([]);
+  const [newSubTaskTitle, setNewSubTaskTitle] = useState("");
+
+  const addSubTask = () => {
+    if (newSubTaskTitle.trim() === "") return;
+
+    const newSubTask = {
+      id: uuidv4(),
+      title: newSubTaskTitle,
+      done: false,
+    };
+
+    setSubtasks((prev) => [...prev, newSubTask]);
+    setNewSubTaskTitle("");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(e);
 
-    axios
-      .post(`${url}/tasks`, {
-        name,
-        description,
-        priority,
-      })
-      .then((response) => {
-        // Se foi submetido
-        if (response.status === 201) {
-          navigate(`/tasks`);
-        }
-      });
+    const newTask = {
+      id: uuidv4(),
+      name: e.target[0].value,
+      description: e.target[1].value,
+      priority,
+      done,
+      subtasks,
+    };
+
+    axios.post(`${url}/tasks`, newTask).then((response) => {
+      if (response.status === 201) {
+        navigate(`/tasks`);
+      }
+    });
   };
 
   return (
     <div>
-      <form action="" onSubmit={handleSubmit}>
+      <h2>Criar Nova Tarefa</h2>
+      <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Nome:</label>
-          <input
-            type="text"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+          <input type="text" name="name" />
         </div>
 
         <div>
           <label htmlFor="description">Descrição:</label>
-          <input
-            type="text"
-            name="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
+          <input type="text" name="description" />
         </div>
 
         <div>
@@ -65,6 +73,36 @@ function CreateTaskPage() {
             <option value="media">Média</option>
             <option value="alta">Alta</option>
           </select>
+        </div>
+
+        <div>
+          <label>Concluída:</label>
+          <input
+            type="checkbox"
+            checked={done}
+            onChange={(e) => setDone(e.target.checked)}
+          />
+        </div>
+
+        <div>
+          <label>Subtarefas:</label>
+          <input
+            type="text"
+            value={newSubTaskTitle}
+            onChange={(e) => setNewSubTaskTitle(e.target.value)}
+            placeholder="Nova subtarefa"
+          />
+          <button type="button" onClick={addSubTask}>
+            Adicionar Subtarefa
+          </button>
+
+          <ul>
+            {subtasks.map((sub) => (
+              <li key={sub.id}>
+                {sub.title} — {sub.done ? "✅" : "❌"}
+              </li>
+            ))}
+          </ul>
         </div>
 
         <button type="submit">Criar Task</button>
