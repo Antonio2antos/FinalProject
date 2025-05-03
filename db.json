@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "name": "António",
+      "description": "universidade aberta",
+      "priority": "baixa",
+      "id": "fd00"
+    },
+    {
+      "id": "b04b",
+      "name": "coca-cola",
+      "description": "usar detergente xpto",
+      "priority": "media"
+    },
+    {
+      "id": "d516",
+      "name": "",
+      "description": "",
+      "priority": ""
+    }
+  ]
+}
